@@ -22,6 +22,7 @@ app.get('/image', function(req, res) {
 });
 
 app.post('/', function(req, res) {
+    var start = process.hrtime();
     fs.readFile(req.files.image.path, function(err, src) {
         if (err) throw(err);
         var img = new canvas.Image();
@@ -37,6 +38,8 @@ app.post('/', function(req, res) {
                   "interval" : 5,
                   "min_neighbors" : 1 });
 
+            var end = process.hrtime(start);
+
             console.log("Found " + result.length + " faces.");
 
             for (var i = 0; i < result.length; i++) {
@@ -48,8 +51,7 @@ app.post('/', function(req, res) {
                 console.log(result[i]);
             }
 
-            debugger;
-            res.send(JSON.stringify({count: result.length, faces: result}));
+            res.send(JSON.stringify({count: result.length, time: end, faces: result}));
         }
 
         img.onerror = function(e1, e2) {
