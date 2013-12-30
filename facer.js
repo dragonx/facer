@@ -47,7 +47,9 @@ app.post('/', function(req, res) {
                 ctx.stroke();
                 console.log(result[i]);
             }
-            res.send(JSON.stringify(result));
+
+            debugger;
+            res.send(JSON.stringify({count: result.length, faces: result}));
         }
 
         img.onerror = function(e1, e2) {
