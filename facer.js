@@ -38,7 +38,7 @@ app.post('/', function(req, res) {
                   "interval" : 5,
                   "min_neighbors" : 1 });
 
-            var end = process.hrtime(start);
+            var diff = process.hrtime(start);
 
             console.log("Found " + result.length + " faces.");
 
@@ -51,7 +51,7 @@ app.post('/', function(req, res) {
                 console.log(result[i]);
             }
 
-            res.send(JSON.stringify({count: result.length, time: end, faces: result}));
+            res.send(JSON.stringify({count: result.length, time: diff[0] * 1e9 + diff[1], faces: result}));
         }
 
         img.onerror = function(e1, e2) {
